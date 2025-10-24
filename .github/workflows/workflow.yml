@@ -1,41 +1,44 @@
-# 这个工作流程的名称
+# 工作流程名称
 name: Publish Python Package to PyPI
 
-# 定义触发这个工作流程的事件
-# 这里设置为当你在 GitHub 上创建一个新的 "release" 时触发
+# 触发条件：当一个新的 Release 被发布时
 on:
   release:
     types: [published]
 
-# 定义工作流程要执行的任务
+# 工作流程任务
 jobs:
   pypi-publish:
     name: Upload release to PyPI
     runs-on: ubuntu-latest
-    # 这一步是可信发布（Trusted Publishing）的关键
-    # 声明这个任务需要一个 OIDC 的 id-token 权限
     permissions:
-      id-token: write
+      id-token: write # 这是可信发布的关键权限
+
     steps:
-      # 第一步：检出（下载）你的代码到虚拟机
+      # 第一步：检出（下载）你的代码
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 第二步：安装 Python
+      # --- 新增的调试步骤 ---
+      # 这一步会递归地列出所有文件，让我们能准确地看到 Actions "看到" 的文件结构是什么样的。
+      - name: List files in the repository
+        run: ls -R
+
+      # 第三步：安装 Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      # 第三步：安装构建依赖
+      # 第四步：安装构建依赖
       - name: Install dependencies
         run: python -m pip install --upgrade pip build
 
-      # 第四步：构建你的包（生成 .whl 和 .tar.gz 文件）
+      # 第五步：构建你的包
+      # 这个命令会在仓库的根目录运行，它应该能直接找到 pyproject.toml
       - name: Build package
         run: python -m build
 
-      # 第五步：使用官方的 pypi-publish action 来发布
-      # 这个 action 会自动处理与 PyPI 的认证过程
+      # 第六步：发布到 PyPI
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
