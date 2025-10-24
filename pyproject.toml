@@ -1,0 +1,58 @@
+# =======================================================
+# Section 1: Build System Configuration
+# 这部分通常不需要修改。它告诉构建工具使用 setuptools。
+# =======================================================
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# =======================================================
+# Section 2: Project Metadata
+# 这是你需要详细填写的部分，是你的包的“身份证”。
+# =======================================================
+[project]
+# --- 必填字段 ---
+# 在 PyPI 上的项目名称。必须是唯一的，通常使用小写字母和连字符。
+name = "PhyExp" 
+# 项目版本号。每次发布新版本时都必须更新它。
+# 强烈建议与你的 GitHub Release 标签版本号保持一致。
+version = "1.1.0" 
+# 项目的简短描述，会显示在 PyPI 的搜索结果里。
+description = "A short description of your amazing package."
+# 支持的 Python 版本。">=3.8" 表示支持 3.8 及以上所有版本。
+requires-python = ">=3.8"
+
+# --- 推荐填写的字段 ---
+# 作者信息
+authors = [
+  { name="Anthony Cheng", email="Anthony_cx@qq.com" },
+]
+# 项目的详细描述，会显示在 PyPI 的主页上。
+# 这里我们指定它读取 README.md 文件的内容。
+readme = "README.md"
+# 许可证。例如 "MIT", "Apache-2.0"。
+# 你也应该在项目根目录放一个名为 LICENSE 的文件。
+license = { text="MIT" }
+
+# --- 分类信息 (Classifiers) ---
+# 这可以帮助用户在 PyPI 上更好地发现你的项目。
+# 完整列表: https://pypi.org/classifiers/
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+# --- 依赖项 (Dependencies) ---
+# 你的项目运行所需要的其他 Python 包。
+# pip 在安装你的包时，会自动安装这些依赖。
+dependencies = [
+    "numpy >= 1.21.6",
+    "matplotlib >= 3.5.3",
+]
+
+# --- 项目链接 (URLs) ---
+# 会显示在 PyPI 页面的侧边栏。
+[project.urls]
+Homepage = "https://github.com/Anthony-xyr/PhyExp"
+"Bug Tracker" = "https://github.com/Anthony-xyr/PhyExp/issues"
