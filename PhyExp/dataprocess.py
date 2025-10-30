@@ -59,7 +59,7 @@ def mean_std(data:np.array, delta:float):
     A_uncertainty, B_uncertainty, uncertainty = calculate_uncertainty(data, delta)
     return mean, A_uncertainty, B_uncertainty, uncertainty
 
-def linear_fit(x, y):
+def linear_fit(x, y, y_delta):
     """
     线性拟合
 
@@ -69,6 +69,8 @@ def linear_fit(x, y):
         自变量数组
     y : np.array
         因变量数组
+    u_y_b : float
+        因变量B类不确定度
 
     返回
     ----
@@ -91,4 +93,28 @@ def linear_fit(x, y):
     b_U : float
         截距综合不确定度
     """
-    
+    n = len(x)
+    if n != len(y):
+        raise ValueError("x和y数组长度必须相等")
+    x_mean = np.mean(x)
+    y_mean = np.mean(y)
+    xy = x * y
+    xx = x * x
+    yy = y * y
+    xy_mean = np.mean(xy)
+    xx_mean = np.mean(xx)
+    yy_mean = np.mean(yy)
+    y_UB = y_delta / np.sqrt(3)
+
+    b = (xy_mean - x_mean * y_mean) / (xx_mean - x_mean**2)
+    a = y_mean - b * x_mean
+    r = (xy_mean - x_mean * y_mean) / np.sqrt((xx_mean - x_mean**2) * (yy_mean - y_mean**2))
+
+    # 计算不确定度
+    b_UA = b*np.sqrt((1/r**2 - 1)/(n - 2))
+    a_UA = b_UA * np.sqrt(xx_mean)
+    b_UB = y_UB / np.sqrt(n*(xx_mean - x_mean**2))
+    a_UB = b_UB * np.sqrt(xx_mean) 
+    b_U = np.sqrt(b_UA**2 + b_UB**2)
+    a_U = np.sqrt(a_UA**2 + a_UB**2)
+    return b, a, r, a_UA, b_UA, a_UB, b_UB, a_U, b_U
