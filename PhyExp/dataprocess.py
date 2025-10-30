@@ -69,8 +69,8 @@ def linear_fit(x, y, y_delta):
         自变量数组
     y : np.array
         因变量数组
-    u_y_b : float
-        因变量B类不确定度
+    y_delta : float
+        因变量的仪器最大允许误差(绝对值)
 
     返回
     ----
