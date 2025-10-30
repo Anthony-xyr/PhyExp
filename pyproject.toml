@@ -16,7 +16,7 @@ build-backend = "setuptools.build_meta"
 name = "PhyExp" 
 # 项目版本号。每次发布新版本时都必须更新它。
 # 强烈建议与你的 GitHub Release 标签版本号保持一致。
-version = "1.1.0" 
+version = "1.1.1" 
 # 项目的简短描述，会显示在 PyPI 的搜索结果里。
 description = "A short description of your amazing package."
 # 支持的 Python 版本。">=3.8" 表示支持 3.8 及以上所有版本。
