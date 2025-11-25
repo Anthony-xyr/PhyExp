@@ -73,21 +73,21 @@ def linear_fit(x, y, y_delta):
 
     返回
     ----
-    b : float
+    k : float
         斜率
-    a : float
+    b : float
         截距
     r : float
         相关系数
-    a_UA : float
+    k_UA : float
         斜率A类不确定度
     b_UA : float
         截距A类不确定度
-    a_UB : float
+    k_UB : float
         斜率B类不确定度
     b_UB : float
         截距B类不确定度
-    a_U : float
+    k_U : float
         斜率综合不确定度
     b_U : float
         截距综合不确定度
@@ -110,15 +110,15 @@ def linear_fit(x, y, y_delta):
 
     y_UB = y_delta / np.sqrt(3)
 
-    b = (xy_mean - x_mean * y_mean) / (xx_mean - x_mean**2)
-    a = y_mean - b * x_mean
+    k = (xy_mean - x_mean * y_mean) / (xx_mean - x_mean**2)
+    b = y_mean - k * x_mean
     r = (xy_mean - x_mean * y_mean) / np.sqrt((xx_mean - x_mean**2) * (yy_mean - y_mean**2))
 
     # 计算不确定度
-    b_UA = b*np.sqrt((1/r**2 - 1)/(n - 2))
-    a_UA = b_UA * np.sqrt(xx_mean)
-    b_UB = y_UB / np.sqrt(n*(xx_mean - x_mean**2))
-    a_UB = b_UB * np.sqrt(xx_mean) 
+    k_UA = k*np.sqrt((1/r**2 - 1)/(n - 2))
+    b_UA = k_UA * np.sqrt(xx_mean)
+    k_UB = y_UB / np.sqrt(n*(xx_mean - x_mean**2))
+    b_UB = k_UB * np.sqrt(xx_mean)
+    k_U = np.sqrt(k_UA**2 + k_UB**2)
     b_U = np.sqrt(b_UA**2 + b_UB**2)
-    a_U = np.sqrt(a_UA**2 + a_UB**2)
-    return b, a, r, a_UA, b_UA, a_UB, b_UB, a_U, b_U
+    return k, b, r, k_UA, b_UA, k_UB, b_UB, k_U, b_U
