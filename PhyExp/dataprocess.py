@@ -1,10 +1,9 @@
 """
 dataprocess是一个用于处理物理实验数据的Python模块，
 主要功能包括计算A类不确定度、平均值、标准差、线性拟合以及绘制数据图表。
-该模块依赖于NumPy和Matplotlib库，适用于需要进行数据分析和可视化的物理实验场景。
+该模块依赖于NumPy库，适用于需要进行数据分析的物理实验场景。
 """
 import numpy as np
-import matplotlib.pyplot as plt
 
 def calculate_A_uncertainty(data):
     """
@@ -104,6 +103,11 @@ def linear_fit(x, y, y_delta):
     xy_mean = np.mean(xy)
     xx_mean = np.mean(xx)
     yy_mean = np.mean(yy)
+
+    # 为了便于同学们书写实验报告的计算步骤，这里将中间变量的数值进行输出
+    print(f"x_mean: {x_mean}, y_mean: {y_mean}, xy_mean: {xy_mean}, xx_mean: {xx_mean}, yy_mean: {yy_mean}")
+    print(f"x_mean*y_mean: {x_mean*y_mean}, x_mean**2: {x_mean**2}, y_mean**2: {y_mean**2}")
+
     y_UB = y_delta / np.sqrt(3)
 
     b = (xy_mean - x_mean * y_mean) / (xx_mean - x_mean**2)
